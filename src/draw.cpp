@@ -1,6 +1,7 @@
 #include "draw.h"
 #include "globals.h"
 #include "player.h"
+#include "vector2.hpp"
 #include <SDL3/SDL_init.h>
 #include <SDL3/SDL_pixels.h>
 #include <SDL3/SDL_rect.h>

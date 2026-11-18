@@ -1,7 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "vector2.hpp"
+#include "vector3.hpp"
 #include <SDL3/SDL_events.h>
 #include <SDL3/SDL_pixels.h>
 
@@ -17,7 +17,7 @@
 class Player {
 public:
   Player();
-  Vector2 position;
+  Vector3 position;
   /**
    * @brief In radians
    */

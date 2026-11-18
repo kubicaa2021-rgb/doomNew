@@ -1,5 +1,6 @@
 #include "globals.h"
 #include "vector2.hpp"
+#include "vector3.hpp"
 #include <SDL3/SDL_events.h>
 #include <SDL3/SDL_keyboard.h>
 #include <cmath>
@@ -7,7 +8,7 @@
 
 Player::Player() {
 
-  position = Vector2{50, 50};
+  position = Vector3{50, 50, 0};
   color = SDL_Color{155, 0, 0, 255};
   radius = 20;
 }
@@ -34,11 +35,12 @@ void Player::handleInput() {
 
 // Basicaly does nothing... yet maybe checks colliision??
 void Player::move(int mv) {
-  Vector2 newPos = {
+  Vector3 newPos = {
       static_cast<float>(this->position.x +
                          std::cos(this->direction) * mv * speed * gDeltaTime),
       static_cast<float>(this->position.y +
-                         std::sin(this->direction) * mv * speed * gDeltaTime)};
+                         std::sin(this->direction) * mv * speed * gDeltaTime),
+      0};
   position = newPos;
 }
 
