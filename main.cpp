@@ -1,7 +1,6 @@
 #include "draw.h"
 #include "funcHelp.h"
 #include "globals.h"
-#include "map.h"
 #include "player.h"
 #include "vector2.hpp"
 #include <SDL3/SDL.h>
@@ -13,11 +12,8 @@ DrawUtil draw; // Drawing utils
 
 Player player; // Player object
 
-Map testMap; // Test map
-
 int main(int argc, char *argv[]) {
   gPlayer = &player;
-  gMap = &testMap;
 
   if (app.init() == false) {
     SDL_Log("Unable to initialize program!\n");
@@ -57,11 +53,8 @@ int main(int argc, char *argv[]) {
       //  Clear the screen with the set color
       SDL_RenderClear(gRenderer);
 
-      draw.drawMap3D(testMap, player);
-
       // Debug Only
-      // draw.drawMap(testMap);
-      // draw.drawPlayer(player);
+      draw.drawPlayer(player);
 
       SDL_RenderPresent(gRenderer);
       // Update the surface

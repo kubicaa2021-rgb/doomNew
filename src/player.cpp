@@ -32,7 +32,7 @@ void Player::handleInput() {
   move(mv);
 }
 
-// Basicaly does nothing... yet mayeb checks colliision??
+// Basicaly does nothing... yet maybe checks colliision??
 void Player::move(int mv) {
   Vector2 newPos = {
       static_cast<float>(this->position.x +

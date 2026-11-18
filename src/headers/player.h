@@ -19,8 +19,8 @@ public:
   Player();
   Vector2 position;
   /**
-   * in radians
-   **/
+   * @brief In radians
+   */
   float direction{0};
   float radius;
   SDL_Color color;

@@ -7,18 +7,16 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_executable(main
 main.cpp
-src/headers/funcHelp.h
-src/funcHelp.cpp
-src/headers/draw.h
 src/draw.cpp
-src/headers/rect.hpp
-src/headers/map.h
-src/map.cpp
-src/headers/player.h
+src/funcHelp.cpp
+src/globals.cpp
 src/player.cpp
-src/headers/vector2.hpp
+src/headers/draw.h
+src/headers/funcHelp.h
 src/headers/globals.h
-src/globals.cpp)
+src/headers/player.h
+src/headers/vector2.hpp
+)
 
 find_package(SDL3 REQUIRED)
 find_package(SDL3_image REQUIRED)
