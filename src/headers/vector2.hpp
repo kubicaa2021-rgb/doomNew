@@ -15,12 +15,12 @@ public:
   /*
 @brief Returns normalized vector
 */
-  Vector2 normalized();
+  Vector2 normalized() const;
   /*
 @brief Gets vector magnitude(length)
 @return `float` Length
 */
-  float getMagnitude();
+  float getMagnitude() const;
 
   static float dotProduct(const Vector2 &a, const Vector2 &b);
 
@@ -35,9 +35,11 @@ inline Vector2::Vector2() {}
 
 inline Vector2::Vector2(float x, float y) : x(x), y(y) {}
 
-inline float Vector2::getMagnitude() { return (std::sqrt(x * x + y * y)); }
+inline float Vector2::getMagnitude() const {
+  return (std::sqrt(x * x + y * y));
+}
 
-inline Vector2 Vector2::normalized() {
+inline Vector2 Vector2::normalized() const {
   float check = this->getMagnitude();
   if (check == 0) {
     return {0, 0};

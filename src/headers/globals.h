@@ -11,6 +11,7 @@ inline constexpr int kScreenHeight{600};
 // Global variables
 extern SDL_Window *gWindow;
 extern SDL_Renderer *gRenderer;
+extern SDL_Texture *gWhiteTexture;
 
 extern Player *gPlayer;
 

@@ -1,4 +1,5 @@
 #include "draw.h"
+#include "face.hpp"
 #include "globals.h"
 #include "player.h"
 #include "vector2.hpp"
@@ -8,7 +9,6 @@
 #include <SDL3/SDL_render.h>
 #include <SDL3/SDL_stdinc.h>
 #include <SDL3/SDL_surface.h>
-#include <algorithm>
 #include <cmath>
 
 DrawUtil::DrawUtil() { createWhiteTex(); }
@@ -26,6 +26,7 @@ bool DrawUtil::createWhiteTex() {
   whiteTex = SDL_CreateTextureFromSurface(gRenderer, surface);
 
   SDL_DestroySurface(surface);
+  gWhiteTexture = whiteTex;
 
   return whiteTex != 0;
 } // }}}
@@ -34,13 +35,13 @@ bool DrawUtil::createWhiteTex() {
 void DrawUtil::drawPlayer(const Player &pl) {
   // {{{
   // Draws player
-  SDL_SetTextureColorMod(whiteTex, pl.color.r, pl.color.g, pl.color.b);
-  SDL_SetTextureAlphaMod(whiteTex, pl.color.a);
+  SDL_SetTextureColorMod(gWhiteTexture, pl.color.r, pl.color.g, pl.color.b);
+  SDL_SetTextureAlphaMod(gWhiteTexture, pl.color.a);
 
   SDL_FRect dstRect{pl.position.x - pl.radius / 2.0f,
                     pl.position.y - pl.radius / 2.0f, pl.radius, pl.radius};
 
-  SDL_RenderTexture(gRenderer, whiteTex, nullptr, &dstRect);
+  SDL_RenderTexture(gRenderer, gWhiteTexture, nullptr, &dstRect);
 
   // Draws direction
   int lineLength = 50;
@@ -50,4 +51,28 @@ void DrawUtil::drawPlayer(const Player &pl) {
   SDL_SetRenderDrawColor(gRenderer, 255, 0, 255, 255);
 
   SDL_RenderLine(gRenderer, pl.position.x, pl.position.y, lineEnd.x, lineEnd.y);
+} // }}}
+
+void DrawUtil::drawTrinagle(const Face2D &face) {
+  SDL_Vertex ver[3]; // {{{
+  ver[0] = {face.vertices[0].x, face.vertices[0].y, 1, 0, 0, 1};
+  ver[1] = {face.vertices[1].x, face.vertices[1].y, 0, 1, 0, 1};
+  ver[2] = {face.vertices[2].x, face.vertices[2].y, 0, 0, 1, 1};
+
+  SDL_RenderGeometry(gRenderer, gWhiteTexture, ver, 3, nullptr, 0);
+} // }}}
+
+void DrawUtil::drawTrinagleOutline(const Face2D &face) {
+  // {{{
+  SDL_FPoint points[4];
+
+  SDL_SetRenderDrawColor(gRenderer, 255, 0, 0, 255);
+
+  points[3] = {face.vertices[0].x, face.vertices[0].y};
+  points[0] = {face.vertices[0].x, face.vertices[0].y};
+  points[1] = {face.vertices[1].x, face.vertices[1].y};
+  points[2] = {face.vertices[2].x, face.vertices[2].y};
+
+  SDL_RenderLines(gRenderer, points, 4);
+
 } // }}}

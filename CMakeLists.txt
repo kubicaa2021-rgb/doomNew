@@ -16,6 +16,10 @@ src/headers/funcHelp.h
 src/headers/globals.h
 src/headers/player.h
 src/headers/vector2.hpp
+src/headers/vector3.hpp
+src/headers/vertex.hpp
+src/headers/face.hpp
+src/headers/util.hpp
 )
 
 find_package(SDL3 REQUIRED)

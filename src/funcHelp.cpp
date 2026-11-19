@@ -1,6 +1,8 @@
 #include "funcHelp.h"
 #include "globals.h"
 #include <SDL3/SDL.h>
+#include <SDL3/SDL_render.h>
+#include <SDL3_image/SDL_image.h>
 
 App::App() {
   SDL_Init(SDL_INIT_VIDEO);
@@ -22,6 +24,7 @@ int App::init() {
                  SDL_GetError());
     return false;
   }
+
   return true;
 } // }}}
 
@@ -29,8 +32,10 @@ void App::close() {
   // Destroy window{{{
   SDL_DestroyWindow(gWindow);
   SDL_DestroyRenderer(gRenderer);
+  SDL_DestroyTexture(gWhiteTexture);
   gWindow = nullptr;
   gRenderer = nullptr;
+  gWhiteTexture = nullptr;
 
   // Quit SDL subsystems
   SDL_Quit();

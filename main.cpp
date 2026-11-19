@@ -1,4 +1,5 @@
 #include "draw.h"
+#include "face.hpp"
 #include "funcHelp.h"
 #include "globals.h"
 #include "player.h"
@@ -11,9 +12,14 @@ App app;
 DrawUtil draw; // Drawing utils
 
 Player player; // Player object
+Face2D face;
 
 int main(int argc, char *argv[]) {
   gPlayer = &player;
+
+  face.vertices[0] = {100, 200};
+  face.vertices[1] = {200, 200};
+  face.vertices[2] = {150, 300};
 
   if (app.init() == false) {
     SDL_Log("Unable to initialize program!\n");
@@ -46,7 +52,7 @@ int main(int argc, char *argv[]) {
       gDeltaTime = std::min(gDeltaTime, 0.05) + 1;
       lastFrameTime = frameStart;
 
-      player.handleInput();
+      // player.handleInput();
 
       // Set the background color
       SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 0);
@@ -55,6 +61,7 @@ int main(int argc, char *argv[]) {
 
       // Debug Only
       draw.drawPlayer(player);
+      draw.drawTrinagleOutline(face);
 
       SDL_RenderPresent(gRenderer);
       // Update the surface
