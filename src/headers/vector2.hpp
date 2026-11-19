@@ -1,5 +1,5 @@
-#ifndef VECTOR2_H
-#define VECTOR2_H
+#ifndef VECTOR2_HPP
+#define VECTOR2_HPP
 
 #include <cmath>
 /*
@@ -52,4 +52,4 @@ inline float Vector2::dotProduct(const Vector2 &a, const Vector2 &b) {
   return (a.x * b.x + a.y * b.y);
 }
 
-#endif // !VECTOR2_H
+#endif // !VECTOR2_HPP

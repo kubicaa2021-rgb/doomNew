@@ -20,6 +20,7 @@ src/headers/vector3.hpp
 src/headers/vertex.hpp
 src/headers/face.hpp
 src/headers/util.hpp
+src/headers/matrix4.hpp
 )
 
 find_package(SDL3 REQUIRED)

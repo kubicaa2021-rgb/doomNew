@@ -1,5 +1,5 @@
-#ifndef FACE_H
-#define FACE_H
+#ifndef FACE_HPP
+#define FACE_HPP
 #include "vector2.hpp"
 #include "vertex.hpp"
 class Face3D {
@@ -15,4 +15,4 @@ public:
 
 inline Face3D::Face3D() {}
 inline Face2D::Face2D() {}
-#endif // !FACE_H
+#endif // !FACE_HPP

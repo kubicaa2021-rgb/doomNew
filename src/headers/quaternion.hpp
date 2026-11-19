@@ -1,7 +1,7 @@
-#ifndef QUATERNION_H
-#define QUATERNION_H
+#ifndef QUATERNION_HPP
+#define QUATERNION_HPP
 
-#include "util.h"
+#include "util.hpp"
 #include "vector3.hpp"
 #include <cmath>
 
@@ -53,4 +53,4 @@ inline void Quaternion::Normalize() {
 
 inline Quaternion Quaternion::Inversed() const { return {w, -x, -y, -z}; }
 
-#endif // !QUATERNION_H
+#endif // !QUATERNION_HPP

@@ -1,8 +1,7 @@
-#ifndef VECTOR3_H
-#define VECTOR3_H
+#ifndef VECTOR3_HPP
+#define VECTOR3_HPP
 
 #include <cmath>
-#include <vector>
 /*
 @brief 3D vector
 @field `float` x,y,z
@@ -65,4 +64,4 @@ inline Vector3 Vector3::operator+(const Vector3 &v) const {
   return {this->x + v.x, this->y + v.y, this->z + v.z};
 }
 
-#endif // !VECTOR3_H
+#endif // !VECTOR3_HPP

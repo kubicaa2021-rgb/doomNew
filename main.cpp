@@ -2,6 +2,7 @@
 #include "face.hpp"
 #include "funcHelp.h"
 #include "globals.h"
+#include "matrix4.hpp"
 #include "player.h"
 #include "vector2.hpp"
 #include <SDL3/SDL.h>
@@ -16,6 +17,8 @@ Face2D face;
 
 int main(int argc, char *argv[]) {
   gPlayer = &player;
+
+  Matrix4 m = {{{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}}};
 
   face.vertices[0] = {100, 200};
   face.vertices[1] = {200, 200};

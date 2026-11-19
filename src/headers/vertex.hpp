@@ -1,5 +1,5 @@
-#ifndef VERTEX_H
-#define VERTEX_H
+#ifndef VERTEX_HPP
+#define VERTEX_HPP
 #include "vector3.hpp"
 class Vertex {
 public:
@@ -8,4 +8,4 @@ public:
 private:
 };
 
-#endif // !VERTEX_H
+#endif // !VERTEX_HPP
