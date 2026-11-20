@@ -1,13 +1,21 @@
+#include <array>
 #include <iostream>
 #ifndef MATRIX4_HPP
+/**
+ * @class Matrix4
+ * @brief Default construction to Identity matrix
+ *
+ */
 class Matrix4 {
 public:
-  int data[4][4];
+  std::array<std::array<float, 4>, 4> data;
 
   void print();
 
-  int (&operator[](int index))[4] { return data[index]; };
+  std::array<float, 4> &operator[](int index) { return data[index]; };
   Matrix4 operator*(Matrix4 &m) const;
+  Matrix4() { data[0][0] = data[1][1] = data[2][2] = data[3][3] = 1; }
+  Matrix4(std::array<std::array<float, 4>, 4> values) : data(values) {}
 
 private:
 };

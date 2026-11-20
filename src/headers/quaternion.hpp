@@ -1,6 +1,7 @@
 #ifndef QUATERNION_HPP
 #define QUATERNION_HPP
 
+#include "matrix4.hpp"
 #include "util.hpp"
 #include "vector3.hpp"
 #include <cmath>
@@ -15,6 +16,7 @@ public:
 
   void Normalize();
   Quaternion Inversed() const;
+  Matrix4 toMatrix4() const;
 };
 
 inline Quaternion Quaternion::FromAxisAngle(const Vector3 &v,
@@ -52,5 +54,17 @@ inline void Quaternion::Normalize() {
 }; // }}}
 
 inline Quaternion Quaternion::Inversed() const { return {w, -x, -y, -z}; }
+
+inline Matrix4 Quaternion::toMatrix4() const {
+  Matrix4 ret;
+  ret[0] = {1 - 2 * (x * x + y * y), 2 * (x * y - w * z), 2 * (x * z + w * y),
+            0};
+  ret[1] = {2 * (x * y + w * z), 1 - 2 * (x * x + z * z), 2 * (y * z - w * x),
+            0};
+  ret[2] = {2 * (x * z - w * y), 2 * (y * z + w * x), 1 - 2 * (x * x + y * y),
+            0};
+  ret[3] = {0, 0, 0, 1};
+  return ret;
+}
 
 #endif // !QUATERNION_HPP
