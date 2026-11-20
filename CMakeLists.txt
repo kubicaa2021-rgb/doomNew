@@ -12,11 +12,13 @@ src/funcHelp.cpp
 src/globals.cpp
 src/player.cpp
 src/object.cpp
+src/renderer.cpp
 src/headers/draw.h
 src/headers/funcHelp.h
 src/headers/globals.h
 src/headers/player.h
 src/headers/object.h
+src/headers/renderer.h
 src/headers/vector2.hpp
 src/headers/vector3.hpp
 src/headers/vertex.hpp

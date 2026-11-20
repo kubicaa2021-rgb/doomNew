@@ -8,7 +8,7 @@
 
 Player::Player() {
 
-  position = Vector3{50, 50, 0};
+  position = Vector3{0, 0, 0};
   color = SDL_Color{155, 0, 0, 255};
   radius = 20;
 }

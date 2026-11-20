@@ -32,10 +32,8 @@ void App::close() {
   // Destroy window{{{
   SDL_DestroyWindow(gWindow);
   SDL_DestroyRenderer(gRenderer);
-  SDL_DestroyTexture(gWhiteTexture);
   gWindow = nullptr;
   gRenderer = nullptr;
-  gWhiteTexture = nullptr;
 
   // Quit SDL subsystems
   SDL_Quit();

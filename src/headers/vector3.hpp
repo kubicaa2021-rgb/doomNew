@@ -2,6 +2,12 @@
 #define VECTOR3_HPP
 
 #include <cmath>
+class Vector4 {
+public:
+  float x, y, z, w;
+  Vector4() {}
+  Vector4(float x, float y, float z, float w) : x(x), y(y), z(z), w(w) {}
+};
 /*
 @brief 3D vector
 @field `float` x,y,z

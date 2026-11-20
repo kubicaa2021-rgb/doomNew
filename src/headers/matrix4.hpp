@@ -1,3 +1,4 @@
+#include "vector3.hpp"
 #include <array>
 #include <iostream>
 #ifndef MATRIX4_HPP
@@ -8,14 +9,16 @@
  */
 class Matrix4 {
 public:
-  std::array<std::array<float, 4>, 4> data;
+  std::array<std::array<float, 4>, 4> data{0};
 
   void print();
 
   std::array<float, 4> &operator[](int index) { return data[index]; };
   Matrix4 operator*(Matrix4 &m) const;
+  Vector4 operator*(const Vector3 &v) const;
   Matrix4() { data[0][0] = data[1][1] = data[2][2] = data[3][3] = 1; }
   Matrix4(std::array<std::array<float, 4>, 4> values) : data(values) {}
+  Matrix4 transposed() const;
 
 private:
 };
@@ -31,6 +34,19 @@ inline Matrix4 Matrix4::operator*(Matrix4 &m) const {
   return A;
 }
 
+inline Vector4 Matrix4::operator*(const Vector3 &v) const {
+  Vector4 A = {v.x, v.y, v.z, 1};
+  A.x =
+      data[0][0] * A.x + data[0][1] * A.y + data[0][2] * A.z + data[0][3] * A.w;
+  A.y =
+      data[1][0] * A.x + data[1][1] * A.y + data[1][2] * A.z + data[1][3] * A.w;
+  A.z =
+      data[2][0] * A.x + data[2][1] * A.y + data[2][2] * A.z + data[2][3] * A.w;
+  A.w =
+      data[3][0] * A.x + data[3][1] * A.y + data[3][2] * A.z + data[3][3] * A.w;
+  return A;
+}
+
 inline void Matrix4::print() {
 
   for (int i = 0; i < 4; i++) {
@@ -39,6 +55,16 @@ inline void Matrix4::print() {
     }
     std::cout << std::endl;
   }
+}
+
+inline Matrix4 Matrix4::transposed() const {
+  Matrix4 ret;
+  for (int i = 0; i < 4; i++) {
+    for (int j = 0; j < 4; j++) {
+      ret[i][j] = data[j][i];
+    }
+  }
+  return ret;
 }
 
 #endif // !MATRIX4_HPP

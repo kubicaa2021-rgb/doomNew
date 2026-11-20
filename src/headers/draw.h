@@ -2,7 +2,9 @@
 #define DRAW_H
 
 #include "face.hpp"
+#include "object.h"
 #include "player.h"
+#include "vertex.hpp"
 #include <SDL3/SDL_render.h>
 
 /**
@@ -14,13 +16,15 @@ class DrawUtil {
 public:
   DrawUtil();
 
-  void drawPlayer(const Player &pl);
+  static void drawPlayer(const Player &pl);
 
-  void drawTrinagle(const Face2D &face);
-  void drawTrinagleOutline(const Face2D &face);
+  static void drawTrinagle(const Face2D &face);
+  static void drawTrinagleOutline(const Face2D &face);
+
+  static void drawObject(const Object &obj);
+
+  static void drawTrinagleOutlineVertexNDC(const std::vector<Vertex> face);
 
 private:
-  SDL_Texture *whiteTex;
-  bool createWhiteTex();
 };
 #endif // !DRAW_H

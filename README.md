@@ -1,4 +1,3 @@
 # doomNew
 ## TODO
-3. Learn to do matrix tranformations
-
+1. Make player camera use quaternion rotation according to player movement

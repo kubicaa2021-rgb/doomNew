@@ -1,26 +1,43 @@
 #include "draw.h"
-#include "face.hpp"
 #include "funcHelp.h"
 #include "globals.h"
+#include "object.h"
 #include "player.h"
 #include "quaternion.hpp"
-#include "vector2.hpp"
+#include "renderer.h"
+#include "vertex.hpp"
 #include <SDL3/SDL.h>
 #include <algorithm>
 
 // window and functions handler
 App app;
-DrawUtil draw; // Drawing utils
 
 Player player; // Player object
-Face2D face;
+
+Object obj;
+Object root;
 
 int main(int argc, char *argv[]) {
   gPlayer = &player;
+  gRoot = &root;
 
-  face.vertices[0] = {100, 200};
-  face.vertices[1] = {200, 200};
-  face.vertices[2] = {150, 300};
+  obj.position = {0, 0, 10};
+  obj.rotation = Quaternion::FromAxisAngle({0, 1, 0}, 0);
+  obj.scale = {1, 1, 1};
+
+  Vertex v1 = {{0, -1, 0}};
+  Vertex v2 = {{1, 1, 0}};
+  Vertex v3 = {{-1, 1, 0}};
+
+  obj.model.vertices.emplace_back(v1);
+  obj.model.vertices.emplace_back(v2);
+  obj.model.vertices.emplace_back(v3);
+
+  obj.updateModelMatrix();
+
+  root.childs.emplace_back(obj);
+
+  Renderer::createProjectionM();
 
   if (app.init() == false) {
     SDL_Log("Unable to initialize program!\n");
@@ -60,9 +77,10 @@ int main(int argc, char *argv[]) {
       //  Clear the screen with the set color
       SDL_RenderClear(gRenderer);
 
-      // Debug Only
-      draw.drawPlayer(player);
-      draw.drawTrinagleOutline(face);
+      // Update Geometry
+      Renderer::update();
+
+      // DrawUtil::drawPlayer(player);
 
       SDL_RenderPresent(gRenderer);
       // Update the surface
