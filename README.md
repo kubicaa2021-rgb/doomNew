@@ -1,3 +1,5 @@
 # doomNew
 ## TODO
-1. Make player camera use quaternion rotation according to player movement
+1. add more triangle object renderer
+2. add obj file loading
+3. make rendering use sdl_geometry

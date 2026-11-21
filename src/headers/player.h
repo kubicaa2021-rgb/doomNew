@@ -33,10 +33,12 @@ public:
   SDL_Color color;
 
   void handleInput();
-  void move(const Vector3 &move);
-  void rotate(float b);
 
 private:
+  void move(const Vector3 &move);
+  void rotate(float b);
+  void rotateCamera(float b);
+
   float speed{1};
 };
 #endif // !PLAYER_H

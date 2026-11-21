@@ -85,7 +85,7 @@ int main(int argc, char *argv[]) {
 
       obj.updateModelMatrix();
 
-      // Update Geometry
+      // Update Frame
       Renderer::update();
 
       DrawUtil::drawPlayer(player);

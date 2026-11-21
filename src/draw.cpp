@@ -28,12 +28,12 @@ void DrawUtil::drawPlayer(const Player &pl) {
                          pl.color.a);
   SDL_RenderRect(gRenderer, &dstRect);
   // Draws direction
-  Vector3 lineEnd = pl.camera.rotation.rotate({0, 1, 0});
+  Vector3 lineEnd = pl.camera.rotation.rotate({0, 0, 1});
+  lineEnd = lineEnd * 50 + pl.position;
 
   SDL_SetRenderDrawColor(gRenderer, 255, 0, 255, 255);
 
-  SDL_RenderLine(gRenderer, pl.position.x, pl.position.z, lineEnd.x * 50,
-                 lineEnd.y * 50);
+  SDL_RenderLine(gRenderer, pl.position.x, pl.position.z, lineEnd.x, lineEnd.z);
 } // }}}
 
 void DrawUtil::drawTrinagle(const Face2D &face) {
