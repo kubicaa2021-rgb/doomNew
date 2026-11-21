@@ -11,11 +11,11 @@ class Object {
 public:
   Vector3 position;
   Quaternion rotation;
-  Vector3 scale;
+  Vector3 scale{1, 1, 1};
   Matrix4 modelMatrix;
   Mesh model;
 
-  std::vector<Object> childs;
+  std::vector<Object *> childs;
 
   void updateModelMatrix();
 };

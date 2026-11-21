@@ -8,14 +8,14 @@
 
 class Quaternion {
 public:
-  float w, x, y, z;
+  float w{1}, x{0}, y{0}, z{0};
 
   Quaternion operator*(const Quaternion &A) const;
 
   static Quaternion FromAxisAngle(const Vector3 &v, const float &angle);
 
   void Normalize();
-  Quaternion Inversed() const;
+  Quaternion InversedUnitQ() const;
   Matrix4 toMatrix4() const;
   Vector3 rotate(const Vector3 &v) const;
 };
@@ -45,6 +45,7 @@ inline void Quaternion::Normalize() {
     x = 0;
     y = 0;
     z = 0;
+    return;
   }
   float invLen = 1.0f / sqrtf(len);
 
@@ -54,11 +55,11 @@ inline void Quaternion::Normalize() {
   z = z * invLen;
 }; // }}}
 
-inline Quaternion Quaternion::Inversed() const { return {w, -x, -y, -z}; }
+inline Quaternion Quaternion::InversedUnitQ() const { return {w, -x, -y, -z}; }
 
 inline Matrix4 Quaternion::toMatrix4() const {
   Matrix4 ret; // {{{
-  ret[0] = {1 - 2 * (x * x + y * y), 2 * (x * y - w * z), 2 * (x * z + w * y),
+  ret[0] = {1 - 2 * (y * y + z * z), 2 * (x * y - w * z), 2 * (x * z + w * y),
             0};
   ret[1] = {2 * (x * y + w * z), 1 - 2 * (x * x + z * z), 2 * (y * z - w * x),
             0};
@@ -71,7 +72,7 @@ inline Matrix4 Quaternion::toMatrix4() const {
 inline Vector3 Quaternion::rotate(const Vector3 &v) const {
   Quaternion v_p = {0, v.x, v.y, v.z};
   v_p.Normalize();
-  Quaternion p = (*this * v_p) * this->Inversed();
+  Quaternion p = (*this * v_p) * this->InversedUnitQ();
   return {p.x, p.y, p.z};
 }
 

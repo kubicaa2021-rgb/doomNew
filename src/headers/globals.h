@@ -4,12 +4,16 @@
 #include "player.h"
 #include <SDL3/SDL_render.h>
 #include <SDL3/SDL_video.h>
+
 extern double gDeltaTime;
 
 inline constexpr int kScreenWidth{900};
 inline constexpr int kScreenHeight{600};
 
-inline constexpr int kFOV = 90;
+/**
+ * @brief In Radians
+ */
+inline constexpr float kFOV = M_PI / 2.0f;
 inline constexpr float kNearClipping = 0.1f;
 inline constexpr float kFarClipping = 100;
 

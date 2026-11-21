@@ -25,5 +25,6 @@ public:
 };
 
 inline Face2D::Face2D() {}
+inline Face3D::Face3D() {}
 inline Mesh::Mesh() {}
 #endif // !FACE_HPP

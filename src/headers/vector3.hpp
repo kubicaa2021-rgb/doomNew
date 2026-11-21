@@ -2,12 +2,6 @@
 #define VECTOR3_HPP
 
 #include <cmath>
-class Vector4 {
-public:
-  float x, y, z, w;
-  Vector4() {}
-  Vector4(float x, float y, float z, float w) : x(x), y(y), z(z), w(w) {}
-};
 /*
 @brief 3D vector
 @field `float` x,y,z
@@ -32,7 +26,10 @@ public:
   static Vector3 crossProduct(const Vector3 &a, const Vector3 &b);
 
   Vector3 operator*(const float &n) const;
+
   Vector3 operator+(const Vector3 &v) const;
+  Vector3 operator-(const Vector3 &v) const;
+  void operator+=(const Vector3 &v);
 };
 
 inline Vector3::Vector3() {}
@@ -68,6 +65,16 @@ inline Vector3 Vector3::operator*(const float &n) const {
 
 inline Vector3 Vector3::operator+(const Vector3 &v) const {
   return {this->x + v.x, this->y + v.y, this->z + v.z};
+}
+
+inline Vector3 Vector3::operator-(const Vector3 &v) const {
+  return {this->x - v.x, this->y - v.y, this->z - v.z};
+}
+
+inline void Vector3::operator+=(const Vector3 &v) {
+  this->x += v.x;
+  this->y += v.y;
+  this->z += v.z;
 }
 
 #endif // !VECTOR3_HPP

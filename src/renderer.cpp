@@ -36,10 +36,10 @@ void Renderer::createProjectionM() {
 }
 
 void Renderer::renderTriangle() {
-  std::vector<Vertex> vert = gRoot->childs[0].model.vertices;
+  std::vector<Vertex> vert = gRoot->childs[0]->model.vertices;
   for (int i = 0; i < vert.size(); i++) {
     Vector4 v = gPlayer->camera.projectionM * gPlayer->camera.viewM *
-                gRoot->childs[0].modelMatrix * vert[i].position;
+                gRoot->childs[0]->modelMatrix * vert[i].position;
     vert[i].position = {v.x / v.w, v.y / v.w, v.z / v.w};
     vert[i].convertToScreenSpace(kScreenWidth, kScreenHeight);
   }

@@ -22,7 +22,9 @@ int main(int argc, char *argv[]) {
   gRoot = &root;
 
   obj.position = {0, 0, 10};
-  obj.rotation = Quaternion::FromAxisAngle({0, 1, 0}, 0);
+
+  float angle = 0;
+  obj.rotation = Quaternion::FromAxisAngle({0, 1, 0}, angle);
   obj.scale = {1, 1, 1};
 
   Vertex v1 = {{0, -1, 0}};
@@ -35,7 +37,7 @@ int main(int argc, char *argv[]) {
 
   obj.updateModelMatrix();
 
-  root.childs.emplace_back(obj);
+  root.childs.emplace_back(&obj);
 
   Renderer::createProjectionM();
 
@@ -70,17 +72,22 @@ int main(int argc, char *argv[]) {
       gDeltaTime = std::min(gDeltaTime, 0.05) + 1;
       lastFrameTime = frameStart;
 
-      // player.handleInput();
+      player.handleInput();
 
       // Set the background color
       SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 0);
       //  Clear the screen with the set color
       SDL_RenderClear(gRenderer);
+      angle += 0.1f;
+
+      obj.rotation = Quaternion::FromAxisAngle({0, 0, 1}, angle);
+
+      obj.updateModelMatrix();
 
       // Update Geometry
       Renderer::update();
 
-      // DrawUtil::drawPlayer(player);
+      DrawUtil::drawPlayer(player);
 
       SDL_RenderPresent(gRenderer);
       // Update the surface
