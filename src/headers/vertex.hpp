@@ -1,9 +1,11 @@
 #ifndef VERTEX_HPP
 #define VERTEX_HPP
-#include "vector3.hpp"
+#include "vector4.hpp"
+#include <SDL3/SDL_pixels.h>
 class Vertex {
 public:
-  Vector3 position;
+  Vector4 position;
+  SDL_Color color{255, 255, 255, 255};
   void convertToScreenSpace(int w, int h);
 
 private:

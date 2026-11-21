@@ -7,6 +7,6 @@ public:
 
 private:
   static void updateViewM();
-  static void renderTriangle();
+  static void renderObject();
 };
 #endif // !RENDERER_H

@@ -9,20 +9,20 @@
 
 void Renderer::update() {
   Renderer::updateViewM();
-  Renderer::renderTriangle();
+  Renderer::renderObject();
 }
 
 void Renderer::updateViewM() {
-  Matrix4 T;
+  Matrix4 T; // {{{
   T[0][3] = -gPlayer->camera.position.x;
   T[1][3] = -gPlayer->camera.position.y;
   T[2][3] = -gPlayer->camera.position.z;
   Matrix4 R = gPlayer->camera.rotation.toMatrix4().transposed();
   gPlayer->camera.viewM = R * T;
-}
+} // }}}
 
 void Renderer::createProjectionM() {
-  Matrix4 P;
+  Matrix4 P; // {{{
   float tan_2fov = tan(static_cast<float>(kFOV) / 2);
   float aspect = static_cast<float>(kScreenWidth) / kScreenHeight;
   P[0][0] = 1.0f / (aspect * tan_2fov);
@@ -33,15 +33,53 @@ void Renderer::createProjectionM() {
   P[2][3] =
       -((2 * kFarClipping * kNearClipping) / (kFarClipping - kNearClipping));
   gPlayer->camera.projectionM = P;
-}
+} // }}}
 
-void Renderer::renderTriangle() {
-  std::vector<Vertex> vert = gRoot->childs[0]->model.vertices;
-  for (int i = 0; i < vert.size(); i++) {
-    Vector4 v = gPlayer->camera.projectionM * gPlayer->camera.viewM *
-                gRoot->childs[0]->modelMatrix * vert[i].position;
-    vert[i].position = {v.x / v.w, v.y / v.w, v.z / v.w};
-    vert[i].convertToScreenSpace(kScreenWidth, kScreenHeight);
+void Renderer::renderObject() {
+  Object *O = gRoot->childs[0];
+
+  Matrix4 MVP = gPlayer->camera.projectionM * gPlayer->camera.viewM *
+                gRoot->childs[0]->modelMatrix;
+
+  std::vector<Vector4> clip;
+
+  for (const Vertex &v : O->model.vertices) {
+    clip.push_back(MVP * v.position);
   }
-  DrawUtil::drawTrinagleOutlineVertexNDC(vert);
+
+  // Until here you can compute with vertices
+  // After that you need to make it use triangles from indicies
+
+  // Add near plane clipping
+  std::vector<Vector4> poly;
+  for (int i = 0; i < clip.size(); i++) {
+    const Vector4 &A = clip[i];
+    const Vector4 &B =
+        clip[(i + 1) % clip.size()]; // when it is more then size set it to 0
+    const float Ad = A.w - kNearClipping;
+    const float Bd = B.w - kNearClipping;
+    if (Ad >= 0)
+      poly.push_back(A);
+
+    if ((Ad >= 0) != (Bd >= 0)) {
+      float t = (kNearClipping - B.w) / (A.w - B.w);
+      poly.push_back({B.x + (A.x - B.x) * t, B.y + (A.y - B.y) * t,
+                      B.z + (A.z - B.z) * t, B.w + (A.w - B.w) * t});
+    }
+  }
+
+  // Fully behind camera
+  if (poly.size() < 3)
+    return;
+
+  // Creating vertex and perspetive divide
+  std::vector<Vertex> verts;
+  for (const Vector4 &vec : poly) {
+    Vertex v;
+    v.position = {vec.x / vec.w, vec.y / vec.w, vec.z / vec.w, vec.w};
+    v.convertToScreenSpace(kScreenWidth, kScreenHeight);
+    verts.push_back(v);
+  }
+  // Change so it renders triangles and not some shit when obj has more vertices
+  DrawUtil::drawPolygonOutline(verts);
 }

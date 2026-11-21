@@ -1,9 +1,6 @@
-#include "globals.h"
-#include "vector2.hpp"
 #include "vector3.hpp"
 #include <SDL3/SDL_events.h>
 #include <SDL3/SDL_keyboard.h>
-#include <cmath>
 #include <player.h>
 
 Player::Player() {
@@ -15,33 +12,28 @@ Player::Player() {
 
 void Player::handleInput() {
   const bool *state = SDL_GetKeyboardState(nullptr);
-
-  int mv{0};
-
+  Vector3 moveVector;
   if (state[SDL_SCANCODE_W]) {
-    mv = 1;
+    moveVector.z = 1;
   }
   if (state[SDL_SCANCODE_S]) {
-    mv = -1;
+    moveVector.z = -1;
   }
   if (state[SDL_SCANCODE_A]) {
-    rotate(-1);
+    moveVector.x = -1;
   }
   if (state[SDL_SCANCODE_D]) {
-    rotate(1);
+    moveVector.x = 1;
   }
-  move(mv);
+  move(moveVector);
 }
 
 // Basicaly does nothing... yet maybe checks colliision??
-void Player::move(int mv) {
-  Vector3 newPos = {
-      static_cast<float>(this->position.x +
-                         std::cos(this->direction) * mv * speed * gDeltaTime),
-      static_cast<float>(this->position.y +
-                         std::sin(this->direction) * mv * speed * gDeltaTime),
-      0};
-  position = newPos;
+void Player::move(const Vector3 &move) {
+  Vector3 newPos = rotation.rotate(move);
+  position += newPos;
+  camera.position = position;
+  camera.rotation = camera.rotation * rotation;
 }
 
-void Player::rotate(float b) { direction += b * gDeltaTime / 10; }
+void Player::rotate(float b) {};

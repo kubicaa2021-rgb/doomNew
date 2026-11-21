@@ -20,7 +20,7 @@ public:
     return data[index];
   };
   Matrix4 operator*(const Matrix4 &m) const;
-  Vector4 operator*(const Vector3 &v) const;
+  Vector4 operator*(const Vector4 &v) const;
   Matrix4() { data[0][0] = data[1][1] = data[2][2] = data[3][3] = 1; }
   Matrix4(std::array<std::array<float, 4>, 4> values) : data(values) {}
   Matrix4 transposed() const;
@@ -39,7 +39,7 @@ inline Matrix4 Matrix4::operator*(const Matrix4 &m) const {
   return A;
 } // }}}
 
-inline Vector4 Matrix4::operator*(const Vector3 &v) const {
+inline Vector4 Matrix4::operator*(const Vector4 &v) const {
   Vector4 A = {v.x, v.y, v.z, 1}; // {{{
   Vector4 B;
   B.x =

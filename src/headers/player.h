@@ -9,7 +9,7 @@
 class Camera {
 public:
   Vector3 position{0, 0, 0};
-  Quaternion rotation{Quaternion::FromAxisAngle({1, 0, 0}, 0)};
+  Quaternion rotation;
   Matrix4 viewM;
   Matrix4 projectionM;
 };
@@ -18,25 +18,22 @@ public:
  * @class Player
  * @brief Player object
  *
- * @field `Vector2 position`
+ * @field `Vector3 position`
  * @field `float radius`
  * @field `SDL_Color color`
- * @field `float direction` in radians
+ * @field `Quaternion direction` in radians
  */
 class Player {
 public:
   Player();
   Vector3 position;
   Camera camera;
-  /**
-   * @brief In radians
-   */
-  float direction{0};
+  Quaternion rotation;
   float radius;
   SDL_Color color;
 
   void handleInput();
-  void move(int mv);
+  void move(const Vector3 &move);
   void rotate(float b);
 
 private:

@@ -23,7 +23,7 @@ public:
 
   static void drawObject(const Object &obj);
 
-  static void drawTrinagleOutlineVertexNDC(const std::vector<Vertex> face);
+  static void drawPolygonOutline(const std::vector<Vertex> &vertices);
 
 private:
 };

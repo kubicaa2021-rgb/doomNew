@@ -5,13 +5,13 @@
 #include "player.h"
 #include "vector2.hpp"
 #include "vector3.hpp"
+#include "vertex.hpp"
 #include <SDL3/SDL_init.h>
 #include <SDL3/SDL_pixels.h>
 #include <SDL3/SDL_rect.h>
 #include <SDL3/SDL_render.h>
 #include <SDL3/SDL_stdinc.h>
 #include <SDL3/SDL_surface.h>
-#include <cmath>
 #include <vector>
 
 DrawUtil::DrawUtil() {}
@@ -22,7 +22,7 @@ void DrawUtil::drawPlayer(const Player &pl) {
   // Draws player
 
   SDL_FRect dstRect{pl.position.x - pl.radius / 2.0f,
-                    pl.position.y - pl.radius / 2.0f, pl.radius, pl.radius};
+                    pl.position.z - pl.radius / 2.0f, pl.radius, pl.radius};
 
   SDL_SetRenderDrawColor(gRenderer, pl.color.r, pl.color.g, pl.color.b,
                          pl.color.a);
@@ -32,7 +32,7 @@ void DrawUtil::drawPlayer(const Player &pl) {
 
   SDL_SetRenderDrawColor(gRenderer, 255, 0, 255, 255);
 
-  SDL_RenderLine(gRenderer, pl.position.x, pl.position.y, lineEnd.x * 50,
+  SDL_RenderLine(gRenderer, pl.position.x, pl.position.z, lineEnd.x * 50,
                  lineEnd.y * 50);
 } // }}}
 
@@ -60,18 +60,17 @@ void DrawUtil::drawTrinagleOutline(const Face2D &face) {
 
 } // }}}
 
-void DrawUtil::drawTrinagleOutlineVertexNDC(const std::vector<Vertex> face) {
+void DrawUtil::drawPolygonOutline(const std::vector<Vertex> &vertices) {
   // {{{
-  SDL_FPoint points[4];
+  std::vector<SDL_FPoint> points;
+  for (const Vertex &v : vertices) {
+    points.push_back({v.position.x, v.position.y});
+  }
+  points.push_back(points.front());
 
   SDL_SetRenderDrawColor(gRenderer, 255, 0, 0, 255);
 
-  points[3] = {face[0].position.x, face[0].position.y};
-  points[0] = {face[0].position.x, face[0].position.y};
-  points[1] = {face[1].position.x, face[1].position.y};
-  points[2] = {face[2].position.x, face[2].position.y};
-
-  SDL_RenderLines(gRenderer, points, 4);
+  SDL_RenderLines(gRenderer, points.data(), points.size());
 
 } // }}}
 

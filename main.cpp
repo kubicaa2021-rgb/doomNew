@@ -8,6 +8,7 @@
 #include "vertex.hpp"
 #include <SDL3/SDL.h>
 #include <algorithm>
+#include <cmath>
 
 // window and functions handler
 App app;
@@ -21,15 +22,15 @@ int main(int argc, char *argv[]) {
   gPlayer = &player;
   gRoot = &root;
 
-  obj.position = {0, 0, 10};
+  obj.position = {0, 0, 1};
 
   float angle = 0;
-  obj.rotation = Quaternion::FromAxisAngle({0, 1, 0}, angle);
+  obj.rotation = Quaternion::FromAxisAngle({1, 0, 0}, 0);
   obj.scale = {1, 1, 1};
 
-  Vertex v1 = {{0, -1, 0}};
-  Vertex v2 = {{1, 1, 0}};
-  Vertex v3 = {{-1, 1, 0}};
+  Vertex v1 = {{0, -1, 0, 0}};
+  Vertex v2 = {{1, 1, 0, 0}};
+  Vertex v3 = {{-1, 1, 0, 0}};
 
   obj.model.vertices.emplace_back(v1);
   obj.model.vertices.emplace_back(v2);
@@ -80,7 +81,7 @@ int main(int argc, char *argv[]) {
       SDL_RenderClear(gRenderer);
       angle += 0.1f;
 
-      obj.rotation = Quaternion::FromAxisAngle({0, 0, 1}, angle);
+      obj.rotation = Quaternion::FromAxisAngle({1, 0, 0}, angle);
 
       obj.updateModelMatrix();
 
